@@ -5,6 +5,11 @@ import { Album } from '@/types/album'
 
 const albumsDirectory = path.join(process.cwd(), 'src/content/albums')
 
+function safeISO(v: any) {
+  const d = new Date(v)
+  return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString()
+}
+
 export function getAllAlbums(): Album[] {
   const fileNames = fs.readdirSync(albumsDirectory)
   return fileNames.map((fileName) => {
@@ -14,7 +19,7 @@ export function getAllAlbums(): Album[] {
     const matterResult = matter(fileContents)
 
     const date = matterResult.data.date
-      ? new Date(matterResult.data.date).toISOString().split('T')[0]
+      ? safeISO(matterResult.data.date).split('T')[0]
       : ''
 
     // 确保所有图片路径都以 '/' 开头
