@@ -4,6 +4,7 @@ import matter from 'gray-matter'
 import { Album } from '@/types/album'
 
 const albumsDirectory = path.join(process.cwd(), 'src/content/albums')
+
 // 保证非法日期不会抛 RangeError
 function safeISO(v: any) {
   const d = new Date(v)

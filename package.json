@@ -1,29 +1,25 @@
 {
   "name": "picsite",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "gray-matter": "^4.0.3",
-    "next": "14.2.4",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-markdown": "^9.0.1"
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "gray-matter": "^4.0.3"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.13",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.4",
-    "postcss": "^8",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0",
+    "vue-tsc": "^2.0.6",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38"
   }
 }
