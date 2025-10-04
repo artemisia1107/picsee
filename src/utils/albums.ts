@@ -1,64 +1,44 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
 import { Album } from '@/types/album'
 
-const albumsDirectory = path.join(process.cwd(), 'src/content/albums')
-
-// 保证非法日期不会抛 RangeError
-function safeISO(v: any) {
-  const d = new Date(v)
-  return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString()
-}
+// 模拟相册数据
+const mockAlbums: Album[] = [
+  {
+    id: '2025',
+    name: '自然风光',
+    date: '2025-09-19',
+    description: '美丽的自然风光摄影集',
+    coverImage: '/images/2025/cover.jpg',
+    images: [
+      '/images/2025/1.png',
+      '/images/2025/2.jpg',
+      '/images/2025/3.jpg'
+    ]
+  },
+  {
+    id: 'about',
+    name: '关于页面',
+    date: '2025-10-01',
+    description: '关于PicSee项目的介绍',
+    coverImage: '/images/about/show-logo.webp',
+    images: [
+      '/images/about/logo.png',
+      '/images/about/logo-rc.png',
+      '/images/about/show-logo.webp'
+    ]
+  }
+];
 
 export function getAllAlbums(): Album[] {
-  const fileNames = fs.readdirSync(albumsDirectory)
-  return fileNames.map((fileName) => {
-    const id = fileName.replace(/\.md$/, '')
-    const fullPath = path.join(albumsDirectory, fileName)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const matterResult = matter(fileContents)
-
-    const date = matterResult.data.date
-      ? safeISO(matterResult.data.date).split('T')[0]
-      : ''
-
-    // 确保所有图片路径都以 '/' 开头
-    const images = matterResult.content
-      .split('\n')
-      .filter(Boolean)
-      .map(line => {
-        const imagePath = line.trim().replace('- ', '')
-        return imagePath.startsWith('/') ? imagePath : `/${imagePath}`
-      })
-
-    // 确保封面图片路径也以 '/' 开头
-    const coverImage = matterResult.data.coverImage
-      ? matterResult.data.coverImage.startsWith('/')
-        ? matterResult.data.coverImage
-        : `/${matterResult.data.coverImage}`
-      : ''
-
-    return {
-      id,
-      name: matterResult.data.name || '',
-      date,
-      description: matterResult.data.description || '',
-      coverImage,
-      images,
-    }
-  })
+  return mockAlbums;
 }
 
 export function getAlbumById(id: string): Album | undefined {
-  const albums = getAllAlbums()
-  return albums.find(album => album.id === id)
+  return mockAlbums.find(album => album.id === id);
 }
 
 export function searchAlbums(query: string): Album[] {
-  const albums = getAllAlbums()
-  return albums.filter(album => 
+  return mockAlbums.filter(album => 
     album.name.toLowerCase().includes(query.toLowerCase()) ||
     album.description.toLowerCase().includes(query.toLowerCase())
-  )
+  );
 }
