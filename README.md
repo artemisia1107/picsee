@@ -1,5 +1,7 @@
 # PicSite
 
+>注：此分支为个人Fork自[Picsite](https://github.com/Gloridust/picsite)维护并使用
+
 <p align="center">
   <a href="#">
     <img width="180" src="public\images\about\logo-rc.png">
